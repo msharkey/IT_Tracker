@@ -1,0 +1,82 @@
+<head> includes header information 
+<link> includes information from other files
+
+Full code of main.css file:
+@import "http://fonts.googleapis.com/css?family=Fauna+One|Muli";
+div.container {
+    width: 40%;
+    margin: 50px auto;
+    font-family: 'Fauna One',serif
+}
+h3 {
+    margin-top: 0;
+    color: #fff;
+    background-color: #3C599B;
+    text-align: Left;
+    padding: 20px 0px;
+    width: 75%;
+    float: left;
+}
+h4 {
+    color: #fff;
+    background-color: #3C599B;
+    text-align: center;
+    padding: 10px 0px;
+    width: 100%;
+    float: right;	
+}
+a:link {
+    color: #fff;
+}
+a:visited {
+    color: #fff;
+}
+a:hover {
+    color: hotpink;
+}
+
+h5 {
+	margin-top: 0;
+  	color: #fff;
+    background-color: #3C599B;
+    text-align: center;
+    padding: 20px 0px;
+    width: 25%;
+    float: right;
+}
+
+
+
+input, select {
+    width: 25%;
+    height: 30px;
+    margin: 10px 0;
+    padding: 5px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+input[type=submit] {
+    background-color: #3C599B;
+    border: 1px solid #fff;
+    font-family: 'Fauna One',serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: #fff;
+    float: Left;
+    height: 50px;
+    width: 150px;
+}
+
+
+
+
+
+table, th, td {
+    color: #3C599B;
+    margin: auto;
+    clear: left;
+    border: 1px solid #3C599B;
+    padding: 5px;
+    border-collapse: collapse;
+}
