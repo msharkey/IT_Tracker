@@ -15,7 +15,7 @@
           <div class="container">
 	
         <h3>Data Analytics and IT request Form</h3>
-		<h5><a href= "http://submititticket.com/Tickethistory.php" onclick="doClick(); return false;">Ticket Dashboard</a></h5>
+		<h5><a href= "http://submititticket.com/IT_Tracker/Tickethistory.php" onclick="doClick(); return false;">Ticket Dashboard</a></h5>
         <form method="post" action= "InsertTicketDetails.php">
            	<script>
 		var deptName = <?php 
@@ -36,7 +36,7 @@
 			
 			function doClick() {
 				if (deptName=='Account Management'){
-					window.location.href = "http://submititticket.com/Tickethistory.php";
+					window.location.href = "http://submititticket.com/IT_Tracker/Tickethistory.php";
 				}
 				else{
 					window.location.href = "http://submititticket.com/IT_tracker/AnalystLanding.php";
@@ -58,15 +58,7 @@
 						echo "Connection could not be established.<br />";
 					die( print_r( sqlsrv_errors(), true));
 					}
-                $query = "
-                                       Select '' as sub_name
-										UNION ALL
-
-										SELECT Employee_name
-										FROM [ITChangeTracker].[dbo].[employee] e
-										JOIN [ITChangeTracker].[dbo].[Department] d
-										ON e.department_ID = d.department_id
-										Where d.Department_name = 'Account Management'";
+                $query = " EXECUTE dbo.usp_getAccountManagers";
                 $results = sqlsrv_query($conn,$query)
                         or die("Query Failed :" . sqlsrv_errors($conn));
                         while ($result = sqlsrv_fetch_array($results)){
@@ -85,12 +77,7 @@
             <select name="request_type">
                 <?php
                 #include "config.php";
-               $query = "
-                                    Select '' as [request_type]
-									UNION ALL
-
-									SELECT  [request_type]
-									FROM [ITChangeTracker].[dbo].[request_type]";
+               $query = "EXECUTE dbo.usp_Ext_RequestType";
                 $results = sqlsrv_query($conn,$query)
                         or die("Query Failed :" . sqlsrv_errors($conn));
                         while ($result = sqlsrv_fetch_array($results)){
@@ -106,16 +93,7 @@
                          <select name="Analyst_Name">
                 <?php
                 
-				   $query = "
-                                    
-								         Select '' as Analyst_Name
-										UNION ALL
-
-										SELECT Employee_name
-										FROM [ITChangeTracker].[dbo].[employee] e
-										JOIN [ITChangeTracker].[dbo].[Department] d
-										ON e.department_ID = d.department_id
-										Where d.Department_name = 'Data Team'";
+				   $query = " EXECUTE dbo.usp_Ext_Analyst";
 										
                 $results = sqlsrv_query($conn,$query)
                         or die("Query Failed :" . sqlsrv_errors($conn));
@@ -140,10 +118,7 @@
               <select name="daterange">
                 <?php
                  
-				   $query = "Select Convert(Varchar(20),daterange,101) as daterange
-							from [ITChangeTracker].[dbo].[PopulateDates](Getdate())
-							Where daterange Between DATEADD(dd,-1,Getdate()) and DATEADD(dd,30,Getdate())
-							";
+				   $query = "Execute dbo.usp_Ext_DateRange";
 										
                 $results = sqlsrv_query($conn,$query)
                         or die("Query Failed :" . sqlsrv_errors($conn));

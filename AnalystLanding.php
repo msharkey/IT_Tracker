@@ -38,23 +38,8 @@
             $connectionInfo = array( "Database"=>DB_NAME, "UID"=>DB_USER, "PWD"=>DB_PASSWORD);
 			
 		    $conn = sqlsrv_connect( $serverName, $connectionInfo);
-			  $query = "
-                           Select request_id , CONVERT(Varchar (20),date_submitted,101) as date_submitted , s.Employee_name,request_desc,request_importance,ISNULL(resolution,'') as Resolution,ISNULL(Convert(Varchar(20),Request_complete_date,101),'') as Completed_Date,Request_type
-						   ,Convert(Varchar(20),requiredDue_Date,101) as requiredDue_Date
-						from dbo.request r
-						JOIN dbo.employee e
-							ON r.assigned_to = e.employee_id
-							JOIN dbo.employee s 
-								ON s.employee_id = request_by
-								JOIN dbo.request_type rt
-								ON rt.request_type_id = r.request_type_id
-								Where e.userName = '".$userName."'
-								 and (
-										('".$ticket_status."' = '' and request_complete_date IS NULL)
-									 OR ('".$ticket_status."' = 'Open' and request_complete_date IS NULL)
-									 OR ('".$ticket_status."' = 'Closed' and request_complete_date IS NOT NULL)	
-									)
-								Order by date_submitted";
+			  $query = "EXEC dbo.usp_Ext_ticketDetails @username = '".$userName."',@ticket_status = '".$ticket_status."'";
+
 		     $results = sqlsrv_query($conn,$query) or die ("Query failed:". sqlsrv_errors($conn));
 	     #echo $results;
 		  echo $ticket_status;
@@ -66,8 +51,8 @@
                       "<td>" . $result['date_submitted'] . "</td>".
 					  "<td>" . $result['requiredDue_Date'] . "</td>".
 					  "<td>" . $result['Employee_name'] . "</td>".
-					  "<td>" . $result['request_desc'] . "</td>".
 					  "<td>" . $result['request_importance'] . "</td>".
+					  "<td>" . $result['request_desc'] . "</td>".
 					  "<td>" . $result['Request_type'] . "</td>".
 					  "<td>" . $result['Resolution'] . "</td>".
 					   "<td>" .$result['Completed_Date'] . "</td>".
@@ -110,18 +95,8 @@
 						echo "Connection could not be established.<br />";
 					die( print_r( sqlsrv_errors(), true));
 					}
-                $query = "
-							  Select ' ' as request_id
-							  UNION ALL
-                               Select Cast(request_id as Varchar(20))
-						from dbo.request r
-						JOIN dbo.employee e
-							ON r.assigned_to = e.employee_id
-							JOIN dbo.employee s 
-								ON s.employee_id = request_by
-								JOIN dbo.request_type rt
-								ON rt.request_type_id = r.request_type_id
-								Where e.userName = '".$userName."'";
+                $query = "EXEC dbo.usp_Ext_ticketIDs @username = '".$userName."'";
+					
 								
                 $results = sqlsrv_query($conn,$query)
                         or die("Query Failed :" . sqlsrv_errors($conn));

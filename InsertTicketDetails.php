@@ -25,7 +25,7 @@
 				$conn = sqlsrv_connect( $serverName, $connectionInfo);
 
 				if( $conn ) {
-					echo "Connection established.<br />";
+					echo "<br />";
 						}else{
 						echo "Connection could not be established.<br />";
 					die( print_r( sqlsrv_errors(), true));
@@ -41,10 +41,10 @@
 				Sqlsrv_close($conn);
 
        ?> 
-	 <br><br>
-	   <p> Click <a href="http://submititticket.com/Default.php">here</a> to submit another ticket.
-	  <br>
-			Click <a href="http://submititticket.com/Default.php">here</a> to view previous tickets.
+	 <br><br><br><br>
+	   <p> Click <a style="color:blue;" href="http://submititticket.com/IT_tracker/Default.php">here</a> to submit another ticket.
+	  <br><br>
+			Click <a style="color:blue;" href="http://submititticket.com/IT_tracker/Tickethistory.php">here</a> to view previous tickets.
 	  </p> 
 	
 	

@@ -5,7 +5,7 @@
 <html>
     <head>
 	<h3> Ticket History </h3>
-	<h5><a href= "http://submititticket.com/Default.php">Back</a></h5>
+	<h5><a href= "http://submititticket.com/IT_tracker/Default.php">Back</a></h5>
         <link href ="main.css" rel="stylesheet"-->
     </head><br>
     <body>
@@ -38,18 +38,7 @@
                  $connectionInfo = array( "Database"=>DB_NAME, "UID"=>DB_USER, "PWD"=>DB_PASSWORD);
 			
 		    $conn = sqlsrv_connect( $serverName, $connectionInfo);
-			  $query = "
-                        Select request_id , CONVERT(Varchar (20),date_submitted,101) as date_submitted , e.Employee_name,request_desc,ISNULL(resolution,'') as Resolution,ISNULL(Convert(Varchar(20),Request_complete_date,101),'') as Completed_Date
-						from dbo.request r
-						JOIN dbo.employee e
-							ON r.assigned_to = e.employee_id
-							JOIN dbo.employee s 
-								ON s.employee_id = request_by
-								Where S.userName = '".$userName."'
-								 and (
-										('".$ticket_status."' = 'Open' and request_complete_date IS NULL)
-									 OR ('".$ticket_status."' = 'Closed' and request_complete_date IS NOT NULL)	
-									)";
+			  $query = "EXEC dbo.usp_Ext_ticketDetails @username = '".$userName."',@ticket_status = '".$ticket_status."'";
 		     $results = sqlsrv_query($conn,$query) or die ("Query failed:". sqlsrv_errors($conn));
 	     #echo $results;
 		  echo $ticket_status;
@@ -59,7 +48,7 @@
                echo "<tr>".
 			          "<td>" . $result['request_id'] . "</td>" . 
                       "<td>" . $result['date_submitted'] . "</td>".
-					  "<td>" . $result['Employee_name'] . "</td>".
+					  "<td>" . $result['AnalystAssigned'] . "</td>".
 					  "<td>" . $result['request_desc'] . "</td>".
 					  "<td>" . $result['Resolution'] . "</td>".
 					   "<td>" .$result['Completed_Date'] . "</td>".

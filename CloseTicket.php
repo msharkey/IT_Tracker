@@ -18,9 +18,10 @@
             <label class="label-form" for="ticket_id">Ticket ID: <label>
               <select name="ticket_id">
                 <?php
-                #include "configMS.php";
-                $serverName = "WIN-08E6TKVCR36"; //serverName\instanceName
-				$connectionInfo = array( "Database"=>"ITChangeTracker", "UID"=>"RemoteAdmin", "PWD"=>"MoralHazard30!!");
+              
+                 include "Config.php";
+               $connectionInfo = array( "Database"=>DB_NAME, "UID"=>DB_USER, "PWD"=>DB_PASSWORD);
+		
 				$conn = sqlsrv_connect( $serverName, $connectionInfo);
 				$userName = $_SERVER['LOGON_USER'];
 				if( $conn ) {
