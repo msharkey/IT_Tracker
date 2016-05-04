@@ -5,7 +5,7 @@
 <html>
     <head>
 	<h3> Ticket History </h3>
-	<h5><a href= "http://submititticket.com/Default.php">Home</a></h5>
+	<h5><a href= "http://submititticket.com/It_tracker/Default.php">Home</a></h5>
         <link href ="main.css" rel="stylesheet"-->
     </head><br>
     <body>

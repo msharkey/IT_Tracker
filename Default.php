@@ -39,7 +39,7 @@
 					window.location.href = "http://submititticket.com/Tickethistory.php";
 				}
 				else{
-					window.location.href = "http://submititticket.com/AnalystLanding.php";
+					window.location.href = "http://submititticket.com/IT_tracker/AnalystLanding.php";
 				}
 					}
 </script>
